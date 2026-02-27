@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy - Research Tracker</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+        }
+        h1 {
+            color: #2563eb;
+            border-bottom: 3px solid #2563eb;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #1d4ed8;
+            margin-top: 30px;
+        }
+        h3 {
+            color: #1e40af;
+        }
+        .meta {
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 30px;
+        }
+        .highlight {
+            background-color: #eff6ff;
+            border-left: 4px solid #2563eb;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        ul {
+            line-height: 1.8;
+        }
+        .summary {
+            background-color: #f0fdf4;
+            border: 2px solid #16a34a;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 30px 0;
+        }
+        .summary h2 {
+            color: #16a34a;
+            margin-top: 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Privacy Policy - Research Tracker</h1>
+    
+    <div class="meta">
+        <strong>Last Updated:</strong> February 12, 2026<br>
+        <strong>Effective Date:</strong> February 12, 2026
+    </div>
+
+    <h2>Overview</h2>
+    <p>Research Tracker is a Chrome extension that helps researchers track academic papers, manage deadlines, and discover relevant journals and conferences. This privacy policy explains how we handle your data.</p>
+
+    <div class="summary">
+        <h2>Summary</h2>
+        <p><strong>Research Tracker stores all your data locally on your device. We don't collect, transmit, or sell your personal information.</strong> The only external service we use is OpenAlex API for fetching public academic data, and we only send anonymous search queries.</p>
+    </div>
+
+    <h2>Data Collection and Storage</h2>
+
+    <h3>What Data We Collect</h3>
+    <p>Research Tracker collects and stores the following data <strong>locally on your device only</strong>:</p>
+    <ul>
+        <li><strong>Saved Papers:</strong> Titles, URLs, notes, and metadata of papers you save</li>
+        <li><strong>Deadlines:</strong> Conference/journal deadlines you manually add</li>
+        <li><strong>Profile Information:</strong> Data imported from your LinkedIn, Google Scholar, or ResearchGate profiles (name, affiliation, research interests, keywords)</li>
+        <li><strong>Manual Interests:</strong> Research keywords you manually add to improve recommendations</li>
+    </ul>
+
+    <h3>Where Data is Stored</h3>
+    <p>All data is stored <strong>locally in your browser</strong> using Chrome's <code>chrome.storage.sync</code> API. This means:</p>
+    <ul>
+        <li>Data is stored on your device</li>
+        <li>Data syncs across your Chrome browsers if you're signed into Chrome</li>
+        <li><strong>We do NOT have access to your data</strong></li>
+        <li><strong>We do NOT store data on our servers</strong></li>
+        <li><strong>We do NOT collect or transmit your personal information</strong></li>
+    </ul>
+
+    <h2>Third-Party Services</h2>
+
+    <h3>OpenAlex API</h3>
+    <p>Research Tracker uses the OpenAlex API (<a href="https://openalex.org" target="_blank">https://openalex.org</a>) to fetch:</p>
+    <ul>
+        <li>Journal and conference metadata</li>
+        <li>Citation metrics</li>
+        <li>Publisher information</li>
+        <li>Research topics</li>
+    </ul>
+
+    <div class="highlight">
+        <strong>What's sent to OpenAlex:</strong> Search queries based on your research interests (e.g., "machine learning", "genomics")<br>
+        <strong>What's NOT sent:</strong> No personal information
+    </div>
+
+    <p><strong>OpenAlex Privacy:</strong> OpenAlex is an open academic database and does not track individual users. Learn more at <a href="https://openalex.org/about" target="_blank">https://openalex.org/about</a></p>
+
+    <h3>Profile Imports</h3>
+    <p>When you choose to import your profile from LinkedIn, Google Scholar, or ResearchGate:</p>
+    <ul>
+        <li>The extension reads publicly visible information from these pages</li>
+        <li>Data is extracted locally in your browser</li>
+        <li><strong>No data is sent to our servers</strong></li>
+        <li>You control what gets imported</li>
+    </ul>
+
+    <h2>Permissions Used</h2>
+
+    <h3>Why We Need Each Permission</h3>
+    <ol>
+        <li><strong>storage</strong> - To save your papers, deadlines, and profile locally in Chrome</li>
+        <li><strong>activeTab</strong> - To detect when you're on a research paper page (arXiv, PubMed, etc.) and show the "Save" button</li>
+        <li><strong>tabs</strong> - To open paper links and journal websites when you click buttons in the extension</li>
+        <li><strong>Host Permissions</strong> - To access specific websites:
+            <ul>
+                <li><code>arxiv.org</code>, <code>scholar.google.com</code>, <code>pubmed.ncbi.nlm.nih.gov</code> - Auto-detect papers</li>
+                <li><code>linkedin.com</code>, <code>researchgate.net</code> - Import profile data (only when you click import)</li>
+                <li><code>nature.com</code>, <code>science.org</code>, <code>ieee.org</code>, etc. - Detect papers on journal websites</li>
+                <li><code>api.openalex.org</code> - Fetch journal/conference metadata</li>
+            </ul>
+        </li>
+    </ol>
+
+    <h2>Data Usage</h2>
+    <p>We use your data <strong>only</strong> for:</p>
+    <ul>
+        <li>Displaying your saved papers in the extension</li>
+        <li>Showing deadline reminders</li>
+        <li>Generating personalized journal/conference recommendations based on your interests</li>
+        <li>Auto-detecting papers when you visit research websites</li>
+    </ul>
+
+    <div class="highlight">
+        <strong>We do NOT:</strong>
+        <ul style="margin: 10px 0;">
+            <li>Sell or share your data with anyone</li>
+            <li>Use your data for advertising</li>
+            <li>Track your browsing activity beyond detecting research papers</li>
+            <li>Store your data on external servers</li>
+            <li>Use your data for any purpose other than the extension's functionality</li>
+        </ul>
+    </div>
+
+    <h2>Your Data Rights</h2>
+    <p>You have complete control over your data:</p>
+
+    <h3>Export Your Data</h3>
+    <p>Click the "Export" button in Settings to download all your data as JSON</p>
+
+    <h3>Delete Your Data</h3>
+    <ul>
+        <li>Click "Clear All Data" in Settings to permanently delete everything</li>
+        <li>Uninstalling the extension also removes all local data</li>
+    </ul>
+
+    <h3>Opt-Out of Profile Import</h3>
+    <ul>
+        <li>You can use the extension without importing any profile</li>
+        <li>Manually add interests instead</li>
+    </ul>
+
+    <h2>Data Security</h2>
+    <ul>
+        <li>All data is stored using Chrome's secure storage APIs</li>
+        <li>No data transmission except anonymous API calls to OpenAlex</li>
+        <li>No cookies or tracking scripts</li>
+        <li>No analytics or telemetry</li>
+    </ul>
+
+    <h2>Changes to This Policy</h2>
+    <p>We may update this privacy policy as the extension evolves. Changes will be reflected with a new "Last Updated" date. Continued use of the extension after changes constitutes acceptance of the new policy.</p>
+
+    <h2>Open Source</h2>
+    <p>Research Tracker is open source. You can review the code to verify our privacy practices.</p>
+
+    <h2>Contact</h2>
+    <p>For privacy questions or concerns, please contact:</p>
+    <ul>
+        <li>LinkedIn: <a href="https://www.linkedin.com/in/madjda-khedimi-336154162/" target="_blank">Madjda Khedimi</a></li>
+    </ul>
+
+    <h2>Children's Privacy</h2>
+    <p>Research Tracker is designed for academic researchers and does not knowingly collect data from children under 13.</p>
+
+    <h2>International Users</h2>
+    <p>Research Tracker works the same way for all users worldwide. Data is stored locally on your device regardless of your location.</p>
+
+    <hr style="margin: 40px 0; border: none; border-top: 2px solid #e5e7eb;">
+
+    <div class="summary">
+        <h2>Quick Summary</h2>
+        <ul>
+            <li>✅ All data stored locally in your browser</li>
+            <li>✅ No personal data collection</li>
+            <li>✅ No tracking or analytics</li>
+            <li>✅ No data selling or sharing</li>
+            <li>✅ Only external API: OpenAlex (public academic database)</li>
+            <li>✅ Full user control (export/delete anytime)</li>
+            <li>✅ Open source code</li>
+        </ul>
+    </div>
+
+</body>
+</html>

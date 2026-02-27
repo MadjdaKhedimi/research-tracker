@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Research Tracker</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <h1 class="title">Research Tracker</h1>
+      <div class="stats">
+        <span id="paper-count">0</span> papers saved
+      </div>
+    </header>
+
+    <nav class="tabs">
+      <button class="tab active" data-tab="library">Library</button>
+      <button class="tab" data-tab="discover">Discover</button>
+      <button class="tab" data-tab="deadlines">Deadlines</button>
+      <button class="tab" data-tab="profile">Profile</button>
+      <button class="tab" data-tab="settings">Settings</button>
+    </nav>
+
+    <!-- Library Tab -->
+    <div id="library-tab" class="tab-content active">
+      <div class="search-bar">
+        <input type="text" id="search-input" placeholder="Search papers..." />
+      </div>
+      <div id="papers-list" class="papers-list">
+        <div class="empty-state">
+          <svg class="empty-icon" width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+          </svg>
+          <p>No papers saved yet</p>
+          <span class="hint">Visit arXiv or PubMed and click "Save"</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Discover Tab -->
+    <div id="discover-tab" class="tab-content">
+      <div class="discover-header">
+        <h2 style="font-size: 15px; margin-bottom: 4px;">Personalized Recommendations</h2>
+        <p id="discover-subtitle" style="font-size: 12px; color: var(--text-secondary); margin-bottom: 12px;">
+          Based on your papers and profile
+        </p>
+        <div class="filter-tabs">
+          <button class="filter-tab active" data-filter="all">All</button>
+          <button class="filter-tab" data-filter="conferences">Conferences</button>
+          <button class="filter-tab" data-filter="journals">Journals</button>
+        </div>
+      </div>
+      <div id="recommendations-list" class="recommendations-list"></div>
+    </div>
+
+    <!-- Deadlines Tab -->
+    <div id="deadlines-tab" class="tab-content">
+      <button id="add-deadline-btn" class="btn-primary">+ Add Deadline</button>
+      <div id="deadline-form" class="form hidden">
+        <input type="text" id="deadline-title" placeholder="Title" />
+        <input type="date" id="deadline-date" />
+        <div class="form-actions">
+          <button id="save-deadline" class="btn-primary">Save</button>
+          <button id="cancel-deadline" class="btn-secondary">Cancel</button>
+        </div>
+      </div>
+      <div id="deadlines-list" class="deadlines-list">
+        <div class="empty-state">
+          <svg class="empty-icon" width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+            <line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/>
+            <line x1="3" y1="10" x2="21" y2="10"/>
+          </svg>
+          <p>No deadlines tracked</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Profile Tab -->
+    <div id="profile-tab" class="tab-content">
+
+      <!-- Profile summary card (shown when profile exists) -->
+      <div id="profile-card" class="hidden">
+        <div class="profile-header">
+          <div class="profile-avatar" id="profile-avatar">?</div>
+          <div>
+            <div class="profile-name" id="profile-name">—</div>
+            <div class="profile-sub" id="profile-affiliation">—</div>
+          </div>
+        </div>
+
+        <div class="profile-sources" id="profile-sources"></div>
+
+        <div class="profile-section">
+          <div class="profile-section-title">Research Interests</div>
+          <div id="profile-interests" class="tag-list"></div>
+        </div>
+
+        <div class="profile-section" id="profile-metrics-section" style="display:none">
+          <div class="profile-section-title">Scholar Metrics</div>
+          <div id="profile-metrics" class="journal-metrics-grid"></div>
+        </div>
+
+        <div class="profile-section">
+          <div class="profile-section-title">Keywords Used for Matching</div>
+          <div id="profile-keywords" class="tag-list small-tags"></div>
+        </div>
+
+        <button id="clear-profile-btn" class="btn-danger btn-sm" style="margin-top:16px;">Clear Profile</button>
+      </div>
+
+      <!-- Empty state (shown when no profile) -->
+      <div id="profile-empty">
+        <div class="empty-state" style="padding-top: 20px;">
+          <svg class="empty-icon" width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/>
+          </svg>
+          <p>No profile yet</p>
+          <span class="hint">Import from LinkedIn or Google Scholar, or add interests manually below</span>
+        </div>
+
+        <div class="profile-import-btns">
+          <button id="open-linkedin-btn" class="btn-import btn-linkedin">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            Import from LinkedIn
+          </button>
+          <button id="open-scholar-btn" class="btn-import btn-scholar">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3L1 9l4 2.18V15c0 3 3.58 6 7 6s7-3 7-6v-3.82L23 9 12 3zm0 2.18L20.18 9 12 13l-8-4L12 5.18zM17 14.5c0 1.5-2.24 4-5 4s-5-2.5-5-4v-2.32l5 2.82 5-2.82V14.5z"/></svg>
+            Import from Google Scholar
+          </button>
+          <button id="open-researchgate-btn" class="btn-import btn-researchgate">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.372 0 0 5.372 0 12s5.372 12 12 12 12-5.372 12-12S18.628 0 12 0zm0 2.182c5.423 0 9.818 4.395 9.818 9.818 0 5.423-4.395 9.818-9.818 9.818-5.423 0-9.818-4.395-9.818-9.818 0-5.423 4.395-9.818 9.818-9.818zm-1.455 3.273v3.273h2.182V5.455h-2.182zm0 4.363v8.727h2.182v-8.727h-2.182z"/></svg>
+            Import from ResearchGate
+          </button>
+        </div>
+      </div>
+
+      <!-- Manual interests (always shown) -->
+      <div class="profile-section" style="margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--border);">
+        <div class="profile-section-title">Manual Interests</div>
+        <p style="font-size:12px;color:var(--text-secondary);margin-bottom:8px;">
+          Add keywords to improve recommendations (e.g. "machine learning", "genomics")
+        </p>
+        <div class="manual-interests-input">
+          <input type="text" id="interest-input" placeholder="Type an interest and press Enter..." />
+        </div>
+        <div id="manual-interests-tags" class="tag-list" style="margin-top:8px;"></div>
+      </div>
+
+    </div>
+
+    <!-- Settings Tab -->
+    <div id="settings-tab" class="tab-content">
+      <div class="settings-section">
+        <h2>Privacy Policy</h2>
+        <p>View our privacy policy to learn how we handle your data.</p>
+        <button id="privacy-policy-btn" class="btn-secondary">View Privacy Policy</button>
+      </div>
+      <div class="settings-section">
+        <h2>Export Data</h2>
+        <button id="export-btn" class="btn-secondary">Download JSON</button>
+      </div>
+      <div class="settings-section">
+        <h2>Clear Data</h2>
+        <button id="clear-all-btn" class="btn-danger">Clear All Data</button>
+      </div>
+      <div class="settings-section">
+        <h2>About</h2>
+        <p class="version">Version 2.3.0</p>
+        <p class="description">Track papers, get personalized recommendations, and manage deadlines.</p>
+      </div>
+      <div class="settings-section">
+        <h2>Contact</h2>
+        <p style="font-size: 13px; color: var(--text-secondary);">Questions or feedback?</p>
+        <button id="contact-btn" class="btn-secondary">Contact on LinkedIn</button>
+      </div>
+    </div>
+
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>

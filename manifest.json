@@ -1,0 +1,88 @@
+{
+  "manifest_version": 3,
+  "name": "Research Tracker",
+  "version": "2.3.0",
+  "description": "Track papers, manage deadlines, and organize your research",
+  
+  "permissions": [
+    "storage"
+  ],
+  
+  "host_permissions": [
+    "https://arxiv.org/*",
+    "https://scholar.google.com/*",
+    "https://pubmed.ncbi.nlm.nih.gov/*",
+    "https://www.linkedin.com/*",
+    "https://linkedin.com/*",
+    "https://www.researchgate.net/*",
+    "https://researchgate.net/*",
+    "https://www.nature.com/*",
+    "https://www.science.org/*",
+    "https://ieeexplore.ieee.org/*",
+    "https://link.springer.com/*",
+    "https://www.springer.com/*",
+    "https://onlinelibrary.wiley.com/*",
+    "https://journals.plos.org/*",
+    "https://www.mdpi.com/*",
+    "https://mdpi.com/*",
+    "https://www.sciencedirect.com/*",
+    "https://api.openalex.org/*"
+  ],
+  
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  
+  "content_scripts": [
+    {
+      "matches": [
+        "*://arxiv.org/*",
+        "*://scholar.google.com/*",
+        "*://pubmed.ncbi.nlm.nih.gov/*",
+        "*://www.nature.com/*",
+        "*://www.science.org/*",
+        "*://ieeexplore.ieee.org/*",
+        "*://link.springer.com/*",
+        "*://www.springer.com/*",
+        "*://onlinelibrary.wiley.com/*",
+        "*://journals.plos.org/*",
+        "*://www.mdpi.com/*",
+        "*://mdpi.com/*",
+        "*://www.sciencedirect.com/*"
+      ],
+      "js": ["content.js"],
+      "css": ["content.css"]
+    },
+    {
+      "matches": [
+        "*://www.linkedin.com/in/*",
+        "*://linkedin.com/in/*"
+      ],
+      "js": ["linkedin.js"]
+    },
+    {
+      "matches": [
+        "*://scholar.google.com/citations*"
+      ],
+      "js": ["scholar.js"]
+    },
+    {
+      "matches": [
+        "*://www.researchgate.net/profile/*",
+        "*://researchgate.net/profile/*"
+      ],
+      "js": ["researchgate.js"]
+    }
+  ],
+  
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+}
