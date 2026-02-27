@@ -43,7 +43,7 @@ This is the secret weapon. Tell Research Tracker your research interests, import
 
 The matching algorithm weighs keyword specificity, match breadth, and venue quality. Not just naive string search.
 
-![Discover Tab](assets/screenshot-discover.png)
+![Discover Tab](assets/screenshot-discover.jpg)
 
 ### 📅 Deadlines: Submission Anxiety, Managed
 Add conference and journal deadlines in two clicks. The extension color-codes urgency: upcoming deadlines get flagged, overdue ones turn red, and today's deadlines scream *"Due today!"*. No more missed CFPs.
