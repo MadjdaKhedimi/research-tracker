@@ -1,34 +1,27 @@
-// scholar.js — Extracts researcher profile from Google Scholar citations pages
+// Injects import bar on Google Scholar profile pages
 
 (function () {
-  // Only run on profile/citations pages, not search
-  if (!window.location.href.includes('citations')) return;
+  if (!window.location.href.includes('/citations')) return;
 
   function extractScholarProfile() {
     const profile = {};
 
-    // Researcher name
-    const nameEl = document.getElementById('gsc_prf_in') ||
-                   document.querySelector('#gsc_prf_in');
+    const nameEl = document.getElementById('gsc_prf_in');
     profile.name = nameEl ? nameEl.textContent.trim() : '';
 
-    // Affiliation
-    const affEl = document.querySelector('.gsc_prf_il') ||
-                  document.querySelector('#gsc_prf_ivh');
+    const affEl = document.querySelector('.gsc_prf_il') || document.querySelector('#gsc_prf_ivh');
     profile.affiliation = affEl ? affEl.textContent.trim() : '';
 
-    // Research interests / keywords listed on profile
     const interestEls = document.querySelectorAll('#gsc_prf_int a, .gsc_prf_inta');
     const interests = [];
     interestEls.forEach(el => {
-      const text = el.textContent.trim();
-      if (text) interests.push(text.toLowerCase());
+      const t = el.textContent.trim();
+      if (t) interests.push(t.toLowerCase());
     });
     profile.interests = interests;
 
-    // Citation metrics
     const metricEls = document.querySelectorAll('.gsc_rsb_std');
-    if (metricEls.length >= 4) {
+    if (metricEls.length >= 3) {
       profile.metrics = {
         totalCitations: metricEls[0].textContent.trim(),
         hIndex: metricEls[2].textContent.trim(),
@@ -36,32 +29,25 @@
       };
     }
 
-    // Paper titles from the publications table
     const paperEls = document.querySelectorAll('.gsc_a_at');
     const papers = [];
     paperEls.forEach(el => {
-      const title = el.textContent.trim();
-      if (title) papers.push(title);
+      const t = el.textContent.trim();
+      if (t) papers.push(t);
     });
     profile.recentPapers = papers.slice(0, 20);
 
-    // Co-authors / collaborators listed
     const coauthorEls = document.querySelectorAll('#gsc_rsb_co a');
     const coauthors = [];
     coauthorEls.forEach(el => {
-      const name = el.textContent.trim();
-      if (name) coauthors.push(name);
+      const n = el.textContent.trim();
+      if (n) coauthors.push(n);
     });
     profile.coauthors = coauthors.slice(0, 10);
 
-    // Extract keywords from all available text
-    const allText = [
-      ...interests,
-      ...papers,
-      profile.affiliation
-    ].join(' ').toLowerCase();
-
+    const allText = [...interests, ...papers, profile.affiliation || ''].join(' ').toLowerCase();
     profile.keywords = extractKeywords(allText, interests);
+
     profile.source = 'google_scholar';
     profile.profileUrl = window.location.href.split('&')[0];
     profile.importedAt = new Date().toISOString();
@@ -71,79 +57,79 @@
 
   function extractKeywords(text, explicitInterests) {
     const domainKeywords = [
-      'machine learning', 'deep learning', 'neural network', 'artificial intelligence',
-      'natural language processing', 'nlp', 'computer vision', 'reinforcement learning',
-      'data science', 'data mining', 'knowledge graph', 'graph neural', 'transformer',
-      'large language model', 'generative ai', 'diffusion',
-      'bioinformatics', 'genomics', 'proteomics', 'computational biology', 'systems biology',
-      'clinical', 'drug discovery', 'biomarker', 'cancer', 'immunology',
-      'neuroscience', 'epidemiology', 'public health', 'medical imaging',
-      'quantum', 'robotics', 'signal processing', 'optimization', 'cybersecurity',
-      'statistics', 'algorithm', 'simulation', 'modeling', 'network', 'graph',
-      'classification', 'regression', 'clustering', 'detection', 'segmentation',
-      'protein', 'rna', 'dna', 'genome', 'sequence', 'structure', 'evolution'
+      'machine learning','deep learning','neural network','artificial intelligence',
+      'natural language processing','computer vision','reinforcement learning',
+      'data science','data mining','knowledge graph','transformer',
+      'large language model','generative ai','federated learning',
+      'bioinformatics','genomics','proteomics','computational biology',
+      'clinical','drug discovery','biomarker','cancer','immunology',
+      'neuroscience','epidemiology','public health','medical imaging',
+      'parkinson','gait analysis','speech analysis','multimodal',
+      'robotics','signal processing','optimization','cybersecurity',
+      'bioengineering','diagnosis','health informatics','wearable',
+      'pattern recognition','classification','disease detection','time series'
     ];
-
-    const found = [...explicitInterests]; // start with Scholar's own interest tags
+    const found = [...explicitInterests];
     domainKeywords.forEach(kw => {
       if (text.includes(kw) && !found.includes(kw)) found.push(kw);
     });
-
-    // Frequent words from paper titles
-    const words = text.split(/\W+/).filter(w =>
-      w.length > 4 &&
-      !['using', 'based', 'model', 'paper', 'study', 'method', 'approach',
-        'analysis', 'system', 'learning', 'toward', 'novel', 'efficient',
-        'large', 'small', 'high', 'deep', 'with', 'from', 'that', 'this',
-        'have', 'been', 'their', 'which', 'where', 'there'].includes(w)
-    );
-
-    const wordFreq = {};
-    words.forEach(w => { wordFreq[w] = (wordFreq[w] || 0) + 1; });
-    const topWords = Object.entries(wordFreq)
-      .sort((a, b) => b[1] - a[1])
-      .slice(0, 25)
-      .map(([w]) => w);
-
-    return [...new Set([...found, ...topWords])];
+    return found;
   }
 
   function injectImportButton() {
-    if (document.getElementById('rt-scholar-btn')) return;
+    if (document.getElementById('rt-scholar-bar')) return;
 
-    // Try to place button near the profile header
-    const profilePanel = document.getElementById('gsc_prf') ||
-                         document.querySelector('#gsc_prf_w');
+    const bar = document.createElement('div');
+    bar.id = 'rt-scholar-bar';
+    bar.style.cssText = `
+      position: fixed; bottom: 24px; right: 24px;
+      display: inline-flex; align-items: center;
+      background: #2563eb; border-radius: 20px;
+      box-shadow: 0 3px 12px rgba(37,99,235,0.4);
+      z-index: 999999;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      overflow: hidden;
+    `;
 
     const btn = document.createElement('button');
-    btn.id = 'rt-scholar-btn';
-    btn.textContent = '📚 Import to Research Tracker';
+    btn.innerHTML = '<span style="font-size:14px;line-height:1">📚</span><span> Import to Research Tracker</span>';
     btn.style.cssText = `
-      display: block;
-      margin-top: 12px;
-      background: #2563eb;
-      color: white;
-      border: none;
-      padding: 8px 16px;
-      border-radius: 6px;
-      font-size: 13px;
-      font-weight: 600;
-      cursor: pointer;
-      font-family: Arial, sans-serif;
-      transition: background 0.2s;
+      background: transparent; color: white; border: none;
+      font-size: 13px; font-weight: 600; cursor: pointer;
+      padding: 8px 10px 8px 14px; white-space: nowrap;
+      display: flex; align-items: center; gap: 6px;
     `;
-    btn.addEventListener('mouseenter', () => { btn.style.background = '#1d4ed8'; });
-    btn.addEventListener('mouseleave', () => { btn.style.background = '#2563eb'; });
+
+    const sep = document.createElement('div');
+    sep.style.cssText = 'width:1px; height:16px; background:rgba(255,255,255,0.3); flex-shrink:0;';
+
+    const closeBtn = document.createElement('button');
+    closeBtn.innerHTML = '&times;';
+    closeBtn.title = 'Dismiss';
+    closeBtn.style.cssText = `
+      background: transparent; color: rgba(255,255,255,0.85); border: none;
+      font-size: 16px; line-height: 1; font-weight: 400;
+      cursor: pointer; padding: 8px 12px 8px 10px;
+      display: flex; align-items: center; justify-content: center;
+    `;
+
+    closeBtn.addEventListener('mouseenter', () => { closeBtn.style.color = 'white'; });
+    closeBtn.addEventListener('mouseleave', () => { closeBtn.style.color = 'rgba(255,255,255,0.85)'; });
+    closeBtn.addEventListener('click', () => bar.remove());
+
+    btn.addEventListener('mouseenter', () => { btn.style.opacity = '0.85'; });
+    btn.addEventListener('mouseleave', () => { btn.style.opacity = '1'; });
 
     btn.addEventListener('click', () => {
-      btn.textContent = '⏳ Importing...';
+      btn.textContent = 'Importing...';
       btn.disabled = true;
 
       const profile = extractScholarProfile();
+
       if (!profile || (!profile.name && profile.interests.length === 0)) {
-        btn.textContent = '❌ Could not read profile';
+        btn.textContent = 'Could not read profile';
         setTimeout(() => {
-          btn.textContent = '📚 Import to Research Tracker';
+          btn.innerHTML = '<span style="font-size:15px">📚</span> Import to Research Tracker';
           btn.disabled = false;
         }, 2500);
         return;
@@ -151,41 +137,33 @@
 
       chrome.storage.sync.get(['userProfile'], (result) => {
         const existing = result.userProfile || {};
-        // Merge: Scholar interests are high-signal so give them priority
+        const allSources = [...new Set([
+          ...(existing.allSources || (existing.source ? [existing.source] : [])),
+          'google_scholar'
+        ])];
         const merged = {
-          ...existing,
-          ...profile,
-          // Merge keyword arrays from both sources
-          keywords: [...new Set([
-            ...(existing.keywords || []),
-            ...(profile.keywords || [])
-          ])],
-          interests: [...new Set([
-            ...(existing.interests || []),
-            ...(profile.interests || [])
-          ])]
+          ...existing, ...profile, allSources,
+          keywords: [...new Set([...(existing.keywords || []), ...(profile.keywords || [])])],
+          interests: [...new Set([...(existing.interests || []), ...(profile.interests || [])])]
         };
         chrome.storage.sync.set({ userProfile: merged }, () => {
-          btn.textContent = '✅ Profile Imported!';
-          btn.style.background = '#16a34a';
-          setTimeout(() => { btn.remove(); }, 3000);
+          btn.textContent = 'Profile Imported!';
+          btn.style.background = 'rgba(255,255,255,0.15)';
+          setTimeout(() => bar.remove(), 3000);
         });
       });
     });
 
-    if (profilePanel) {
-      profilePanel.appendChild(btn);
-    } else {
-      // Fallback: fixed position
-      btn.style.cssText += 'position:fixed;bottom:24px;right:24px;z-index:999999;box-shadow:0 4px 12px rgba(37,99,235,0.4);';
-      document.body.appendChild(btn);
-    }
+    bar.appendChild(btn);
+    bar.appendChild(sep);
+    bar.appendChild(closeBtn);
+    document.body.appendChild(bar);
   }
 
-  // Scholar is mostly server-rendered so no long wait needed
   if (document.readyState === 'complete') {
-    injectImportButton();
+    setTimeout(injectImportButton, 800);
   } else {
-    window.addEventListener('load', injectImportButton);
+    window.addEventListener('load', () => setTimeout(injectImportButton, 800));
   }
+
 })();

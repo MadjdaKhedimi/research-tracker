@@ -1,26 +1,22 @@
-// Content script - Auto-detects papers with comprehensive publisher support
+// Detects papers on publisher pages and shows a save prompt
 
-// Configuration
 const AUTO_DETECT_ENABLED = true;
-const DEBUG_MODE = true; // Set to false to reduce console logs
+const DEBUG_MODE = false;
 
-// State management
 let hasDetected = false;
 let currentPaperUrl = null;
 let isProcessing = false;
 let detectionAttempts = 0;
 const MAX_ATTEMPTS = 3;
 
-// Logging helper
 function log(message, data = null) {
   if (DEBUG_MODE) {
     console.log(`[Research Tracker] ${message}`, data || '');
   }
 }
 
-// Multiple detection attempts with increasing delays
 function scheduleDetection() {
-  const delays = [500, 1500, 3000]; // Try at 0.5s, 1.5s, and 3s
+  const delays = [500, 1500, 3000];
   
   delays.forEach((delay, index) => {
     setTimeout(() => {
@@ -33,13 +29,11 @@ function scheduleDetection() {
   });
 }
 
-// Run on load
 window.addEventListener('load', () => {
   log('Page loaded, starting detection');
   scheduleDetection();
 });
 
-// Also try on DOMContentLoaded for faster detection
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', () => {
     log('DOM ready, attempting early detection');
@@ -68,7 +62,6 @@ function detectAndProcess() {
   let paperInfo = null;
   let source = 'Unknown';
 
-  // Check each publisher
   if (url.includes('arxiv.org/abs/')) {
     source = 'arXiv';
     paperInfo = extractArxiv();
@@ -447,12 +440,29 @@ function extractMDPI() {
     return null;
   }
   
-  const authorsEl = document.querySelector('.art-authors, .authors, .article-authors, .sciprofiles-link, div[class*="author"], .art-authors-list');
+  let authorsEl = null;
+  const sciprofileNames = document.querySelectorAll('span.sciprofiles-link-name');
+  if (sciprofileNames.length > 0) {
+    const names = [...sciprofileNames].map(s => s.textContent.trim()).filter(Boolean);
+    authorsEl = { textContent: names.join(', '), _fake: true };
+  }
+  if (!authorsEl) {
+    // itemprop="author" is specific enough to not match navigation
+    const authorEls = document.querySelectorAll('[itemprop="author"] [itemprop="name"]');
+    if (authorEls.length > 0) {
+      const names = [...authorEls].map(s => s.textContent.trim()).filter(Boolean);
+      authorsEl = { textContent: names.join(', '), _fake: true };
+    }
+  }
+  if (!authorsEl) {
+    const el = document.querySelector('.art-authors');
+    if (el && el.textContent.trim().length > 2) authorsEl = el;
+  }
   const abstractEl = document.querySelector('.art-abstract, section.abstract, .article-content .abstract, div[class*="abstract"]');
   
   return {
     title: titleEl.textContent.trim(),
-    authors: authorsEl ? authorsEl.textContent.trim() : '',
+    authors: authorsEl ? (authorsEl._fake ? authorsEl.textContent : authorsEl.textContent.trim()) : '',
     abstract: abstractEl ? abstractEl.textContent.trim() : '',
     url: window.location.href,
     source: 'MDPI'
@@ -638,9 +648,13 @@ function savePaper(paperInfo, notes) {
   const paper = {
     id: Date.now(),
     title: paperInfo.title,
+    authors: paperInfo.authors || '',
     url: paperInfo.url,
     source: paperInfo.source,
+    doi: paperInfo.doi || null,
     notes: notes,
+    status: 'To Read',
+    rating: 0,
     savedAt: new Date().toISOString()
   };
 
@@ -700,7 +714,6 @@ function escapeHtml(text) {
   return div.innerHTML;
 }
 
-// Log initial state
 log('Extension loaded and ready');
 log(`Auto-detect: ${AUTO_DETECT_ENABLED ? 'ON' : 'OFF'}`);
 log(`Debug mode: ${DEBUG_MODE ? 'ON' : 'OFF'}`);

@@ -1,13 +1,11 @@
 {
   "manifest_version": 3,
   "name": "Research Tracker",
-  "version": "2.3.0",
+  "version": "2.3.1",
   "description": "Track papers, manage deadlines, and organize your research",
-  
   "permissions": [
     "storage"
   ],
-  
   "host_permissions": [
     "https://arxiv.org/*",
     "https://scholar.google.com/*",
@@ -26,9 +24,10 @@
     "https://www.mdpi.com/*",
     "https://mdpi.com/*",
     "https://www.sciencedirect.com/*",
-    "https://api.openalex.org/*"
+    "https://api.openalex.org/*",
+    "https://dblp.org/*",
+    "https://wikicfp.com/*"
   ],
-  
   "action": {
     "default_popup": "popup.html",
     "default_icon": {
@@ -37,12 +36,10 @@
       "128": "icons/icon128.png"
     }
   },
-  
   "content_scripts": [
     {
       "matches": [
         "*://arxiv.org/*",
-        "*://scholar.google.com/*",
         "*://pubmed.ncbi.nlm.nih.gov/*",
         "*://www.nature.com/*",
         "*://www.science.org/*",
@@ -55,31 +52,40 @@
         "*://mdpi.com/*",
         "*://www.sciencedirect.com/*"
       ],
-      "js": ["content.js"],
-      "css": ["content.css"]
+      "js": [
+        "content.js"
+      ],
+      "css": [
+        "content.css"
+      ]
     },
     {
       "matches": [
         "*://www.linkedin.com/in/*",
         "*://linkedin.com/in/*"
       ],
-      "js": ["linkedin.js"]
+      "js": [
+        "linkedin.js"
+      ]
     },
     {
       "matches": [
         "*://scholar.google.com/citations*"
       ],
-      "js": ["scholar.js"]
+      "js": [
+        "scholar.js"
+      ]
     },
     {
       "matches": [
         "*://www.researchgate.net/profile/*",
         "*://researchgate.net/profile/*"
       ],
-      "js": ["researchgate.js"]
+      "js": [
+        "researchgate.js"
+      ]
     }
   ],
-  
   "icons": {
     "16": "icons/icon16.png",
     "48": "icons/icon48.png",

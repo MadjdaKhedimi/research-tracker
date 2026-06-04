@@ -794,3 +794,326 @@ body {
 @keyframes spin {
   to { transform: rotate(360deg); }
 }
+
+/* ===== v3.0 ADDITIONS ===== */
+
+/* Paper card header */
+.paper-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+  gap: 8px;
+}
+.paper-source-badge {
+  font-size: 10px;
+  font-weight: 600;
+  background: #eff6ff;
+  color: #2563eb;
+  padding: 2px 7px;
+  border-radius: 20px;
+  letter-spacing: 0.03em;
+}
+.paper-meta-right { display: flex; align-items: center; gap: 6px; }
+.paper-authors { font-size: 11px; color: var(--text-secondary); margin: 2px 0 6px; line-height: 1.4; }
+.paper-notes { font-size: 12px; color: var(--text-secondary); font-style: italic; margin: 4px 0 6px; line-height: 1.4; }
+
+/* Status select */
+.status-select {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 20px;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  appearance: none;
+  -webkit-appearance: none;
+}
+.status-toread  { background: #f3f4f6; color: #374151; }
+.status-reading { background: #eff6ff; color: #2563eb; }
+.status-done    { background: #f0fdf4; color: #16a34a; }
+
+/* Star rating */
+.paper-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 8px;
+  gap: 8px;
+}
+.star-rating { display: flex; gap: 2px; }
+.star {
+  font-size: 16px;
+  color: #d1d5db;
+  cursor: pointer;
+  transition: color 0.15s, transform 0.15s;
+  user-select: none;
+}
+.star:hover, .star-filled { color: #f59e0b; }
+.star:hover { transform: scale(1.2); }
+
+/* Citation panel */
+.cite-panel {
+  margin-top: 10px;
+  background: #f9fafb;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px;
+}
+.cite-panel.hidden { display: none; }
+.cite-tabs { display: flex; gap: 4px; margin-bottom: 8px; }
+.cite-tab-btn {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background: white;
+  cursor: pointer;
+  color: var(--text-secondary);
+  transition: all 0.15s;
+}
+.cite-tab-btn.active { background: #2563eb; color: white; border-color: #2563eb; }
+.cite-text {
+  font-size: 11px;
+  color: #374151;
+  line-height: 1.6;
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 8px;
+  white-space: pre-wrap;
+  word-break: break-word;
+  font-family: 'Courier New', monospace;
+  max-height: 120px;
+  overflow-y: auto;
+  margin-bottom: 6px;
+}
+.btn-copy-cite {
+  font-size: 11px;
+  padding: 4px 10px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: white;
+  cursor: pointer;
+  font-weight: 600;
+  color: #374151;
+  transition: all 0.15s;
+}
+.btn-copy-cite:hover { background: #f3f4f6; }
+
+/* Deadline urgency */
+.deadline-card { border-radius: 10px; padding: 12px 14px; background: white; border: 1px solid var(--border); margin-bottom: 10px; }
+.deadline-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
+.deadline-title-row { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+.deadline-title { font-size: 13px; font-weight: 600; color: #111827; }
+.deadline-type-badge { font-size: 10px; padding: 2px 7px; border-radius: 20px; background: #f3f4f6; color: #374151; font-weight: 600; }
+.deadline-footer { display: flex; align-items: center; gap: 12px; margin-top: 6px; flex-wrap: wrap; }
+.deadline-date { font-size: 12px; color: var(--text-secondary); }
+.deadline-days { font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 20px; }
+.deadline-notes { font-size: 11px; color: var(--text-secondary); margin-top: 6px; font-style: italic; }
+.deadline-link { font-size: 11px; color: #2563eb; text-decoration: none; }
+.deadline-link:hover { text-decoration: underline; }
+.deadline-delete-btn { background: none; border: none; color: #9ca3af; cursor: pointer; font-size: 16px; padding: 0 4px; line-height: 1; }
+.deadline-delete-btn:hover { color: #ef4444; }
+
+/* Urgency colors */
+.deadline-overdue { border-left: 4px solid #ef4444; }
+.deadline-overdue .deadline-days { background: #fef2f2; color: #ef4444; }
+.deadline-urgent  { border-left: 4px solid #f97316; }
+.deadline-urgent  .deadline-days { background: #fff7ed; color: #f97316; }
+.deadline-soon    { border-left: 4px solid #eab308; }
+.deadline-soon    .deadline-days { background: #fefce8; color: #854d0e; }
+.deadline-ok      { border-left: 4px solid #22c55e; }
+.deadline-ok      .deadline-days { background: #f0fdf4; color: #16a34a; }
+
+/* Deadline form */
+#deadline-form input, #deadline-form select, #deadline-form textarea {
+  width: 100%; box-sizing: border-box; margin-bottom: 8px;
+  padding: 8px 10px; border: 1px solid var(--border); border-radius: 6px;
+  font-size: 13px; font-family: inherit; color: #111827;
+}
+#deadline-form select { background: white; cursor: pointer; }
+
+/* Deadline suggestions dropdown */
+.deadline-suggestions {
+  position: absolute; top: 100%; left: 0; right: 0; z-index: 9999;
+  background: white; border: 1px solid var(--border); border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.12); max-height: 220px; overflow-y: auto;
+}
+.suggestion-item {
+  padding: 9px 12px; cursor: pointer; border-bottom: 1px solid #f3f4f6;
+  display: flex; flex-direction: column; gap: 2px; transition: background 0.1s;
+}
+.suggestion-item:last-child { border-bottom: none; }
+.suggestion-item:hover { background: #eff6ff; }
+.suggestion-name { font-size: 12px; font-weight: 600; color: #111827; }
+.suggestion-meta { font-size: 10px; color: var(--text-secondary); }
+.suggestions-loading, .suggestions-empty { padding: 10px 12px; font-size: 12px; color: var(--text-secondary); text-align: center; }
+
+/* Source badges for multi-source profile */
+.source-linkedin    { background: #dbeafe; color: #1d4ed8; }
+.source-google-scholar { background: #dcfce7; color: #15803d; }
+.source-researchgate { background: #ccfbf1; color: #0f766e; }
+
+/* Track deadline button on venue cards */
+.add-deadline-from-venue {
+  font-size: 11px !important;
+  color: #374151 !important;
+  border-color: var(--border) !important;
+}
+
+/* Loading spinner tweak */
+.loading-spinner {
+  width: 32px; height: 32px;
+  border: 3px solid #e5e7eb;
+  border-top-color: #2563eb;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  margin: 32px auto 0;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Always-visible import section */
+.profile-import-section {
+  margin-top: 14px;
+  padding: 12px;
+  background: #f9fafb;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+.import-section-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 8px;
+}
+.profile-import-btns {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.btn-import {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 10px;
+  border-radius: 7px;
+  border: none;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.15s, transform 0.1s;
+  white-space: nowrap;
+}
+.btn-import:hover { opacity: 0.85 !important; transform: scale(1.02); }
+.btn-linkedin    { background: #0a66c2; color: white; }
+.btn-scholar     { background: #4285f4; color: white; }
+.btn-researchgate { background: #00d0b1; color: white; }
+
+/* ===== Deadline suggestion enhancements ===== */
+.suggestion-main {
+  display: flex; align-items: center; gap: 6px; flex-wrap: wrap;
+}
+.suggestion-acronym {
+  color: var(--text-secondary); font-weight: 400;
+}
+.suggestion-type-badge {
+  font-size: 9px; font-weight: 700; padding: 1px 5px;
+  border-radius: 10px; text-transform: uppercase; letter-spacing: 0.04em;
+}
+.suggestion-type-badge.badge-conference { background: #eff6ff; color: #2563eb; }
+.suggestion-type-badge.badge-journal    { background: #f0fdf4; color: #16a34a; }
+.suggestion-details {
+  display: flex; align-items: center; gap: 8px;
+  margin-top: 3px; flex-wrap: wrap;
+}
+.suggestion-deadline {
+  font-size: 11px; color: #16a34a; font-weight: 600;
+  display: flex; align-items: center; gap: 4px;
+}
+.deadline-warning {
+  font-size: 10px; color: #f97316; cursor: help;
+}
+.suggestion-no-deadline {
+  font-size: 10px; color: #9ca3af; font-style: italic;
+}
+.suggestion-hindex {
+  font-size: 10px; color: var(--text-secondary);
+  background: #f3f4f6; padding: 1px 5px; border-radius: 8px;
+}
+.suggestions-disclaimer {
+  padding: 8px 12px;
+  background: #fffbeb;
+  border-top: 1px solid #fde68a;
+  font-size: 10px;
+  color: #92400e;
+  line-height: 1.5;
+}
+.suggestions-footer {
+  padding: 6px 12px;
+  font-size: 10px;
+  color: var(--text-secondary);
+  text-align: center;
+  font-style: italic;
+}
+
+/* Deadline disclaimer on saved cards */
+.deadline-disclaimer {
+  font-size: 10px;
+  color: #92400e;
+  background: #fffbeb;
+  border: 1px solid #fde68a;
+  border-radius: 5px;
+  padding: 4px 8px;
+  margin-top: 6px;
+  line-height: 1.4;
+}
+
+/* Source badge remove button */
+.source-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.source-remove-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 12px;
+  line-height: 1;
+  padding: 0 0 0 2px;
+  color: inherit;
+  opacity: 0.6;
+  transition: opacity 0.15s;
+}
+.source-remove-btn:hover {
+  opacity: 1;
+}
+
+.suggestion-deadline.deadline-urgent { color: #f97316; }
+.suggestion-deadline.deadline-soon   { color: #eab308; }
+.suggestion-deadline.deadline-ok     { color: #16a34a; }
+
+/* Removable tags */
+.tag-removable {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+}
+.tag-remove-kw {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 11px;
+  line-height: 1;
+  padding: 0;
+  color: inherit;
+  opacity: 0.5;
+  transition: opacity 0.15s;
+  margin-left: 2px;
+}
+.tag-remove-kw:hover { opacity: 1; }
