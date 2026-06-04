@@ -9,7 +9,30 @@
 
 <br/>
 
-![Research Tracker in action](assets/demo.gif)
+---
+
+## 🎬 See It in Action
+
+![Research Tracker demo](assets/demo.gif)
+
+<table>
+  <tr>
+    <td align="center"><b>📚 Library</b></td>
+    <td align="center"><b>📡 Discover</b></td>
+  </tr>
+  <tr>
+    <td><img src="assets/screenshot-library.png" width="280" alt="Library tab - saved papers with reading status, star ratings, and citation export"/></td>
+    <td><img src="assets/screenshot-discover.png" width="280" alt="Discover tab - personalized journal and conference recommendations"/></td>
+  </tr>
+  <tr>
+    <td align="center"><b>📅 Deadlines</b></td>
+    <td align="center"><b>👤 Profile</b></td>
+  </tr>
+  <tr>
+    <td><img src="assets/screenshot-deadlines.png" width="280" alt="Deadlines tab - add and track submission deadlines with urgency colors"/></td>
+    <td><img src="assets/screenshot-profile.png" width="280" alt="Profile tab - imported from LinkedIn and Google Scholar with research interests"/></td>
+  </tr>
+</table>
 
 ---
 
@@ -38,11 +61,11 @@ You're 3 papers deep into a rabbit hole on arXiv at midnight, your browser has 4
 
 ### Discover
 - Recommendations now factor in both your imported profiles and saved papers
-- All API calls run in parallel — results load noticeably faster
+- All API calls run in parallel - results load noticeably faster
 - Relevance score reflects how many of your research topics a venue covers
 
 ### Profile
-- Import from LinkedIn, Google Scholar, and ResearchGate simultaneously — all three sources merge into one profile
+- Import from LinkedIn, Google Scholar, and ResearchGate simultaneously - all three sources merge into one profile
 - Import buttons always visible so you can add or refresh sources at any time
 - After first import, each button links directly to your saved profile page
 - **Remove individual imported sources** with one click
@@ -51,7 +74,7 @@ You're 3 papers deep into a rabbit hole on arXiv at midnight, your browser has 4
 
 ### Content Scripts
 - Close button added to the import bar on LinkedIn, Google Scholar, and ResearchGate
-- Profile extraction now uses page text instead of DOM class selectors — survives site redesigns
+- Profile extraction now uses page text instead of DOM class selectors - survives site redesigns
 
 ---
 
@@ -62,8 +85,6 @@ Browse arXiv and suddenly a notification slides in: *"Paper detected -- save it?
 
 **Supported publishers:**
 `arXiv` · `PubMed` · `Nature` · `Science` · `IEEE Xplore` · `Springer` · `Wiley` · `PLOS` · `MDPI` · `ScienceDirect`
-
-![Library Tab](assets/screenshot-library.jpg)
 
 ### 📡 Discover: AI-Powered Venue Recommendations
 This is the secret weapon. Tell Research Tracker your research interests, import your academic profile, and it queries the [OpenAlex](https://openalex.org) database to surface the most relevant journals and conferences for *you*, complete with real metrics:
@@ -78,13 +99,11 @@ This is the secret weapon. Tell Research Tracker your research interests, import
 
 The matching algorithm weighs keyword specificity, match breadth, and venue quality. Not just naive string search. All API calls run in parallel for fast results.
 
-![Discover Tab](assets/screenshot-discover.jpg)
-
 ### 📅 Deadlines: Submission Anxiety, Managed
-Add conference and journal deadlines in two clicks. Tag them as Conference, Journal, Workshop, or Other. Type a venue name and get live suggestions from DBLP and OpenAlex — submission deadlines auto-filled from WikiCFP (future dates only). The extension color-codes urgency: green → yellow → orange → red as the date approaches, with a reminder on every card to verify on the official site. No more missed CFPs.
+Add conference and journal deadlines in two clicks. Tag them as Conference, Journal, Workshop, or Other. Type a venue name and get live suggestions from DBLP and OpenAlex - submission deadlines auto-filled from WikiCFP (future dates only). The extension color-codes urgency: green → yellow → orange → red as the date approaches, with a reminder on every card to verify on the official site. No more missed CFPs.
 
 ### 👤 Profile: Import Once, Benefit Forever
-Connect your academic identity by visiting your profile on LinkedIn, Google Scholar, or ResearchGate — or all three at once. A floating button appears. Click it and your name, affiliation, research interests, and keywords are extracted locally and stored. Multiple sources merge automatically, with deduplication. Remove individual sources or keywords anytime. These feed directly into the recommendation engine.
+Connect your academic identity by visiting your profile on LinkedIn, Google Scholar, or ResearchGate - or all three at once. A floating button appears. Click it and your name, affiliation, research interests, and keywords are extracted locally and stored. Multiple sources merge automatically, with deduplication. Remove individual sources or keywords anytime. These feed directly into the recommendation engine.
 
 You can also manually add interests like `"federated learning"` or `"CRISPR"` and they're weighted in immediately.
 
