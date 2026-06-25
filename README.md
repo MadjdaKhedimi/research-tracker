@@ -13,7 +13,7 @@
 
 ## 🎬 See It in Action
 
-![Research Tracker demo](https://raw.githubusercontent.com/MadjdaKhedimi/research-tracker/main/assets/demo.gif))
+![Research Tracker demo](https://raw.githubusercontent.com/MadjdaKhedimi/research-tracker/main/assets/demo.gif)
 
 <table>
   <tr>
