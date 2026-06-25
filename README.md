@@ -22,7 +22,7 @@
   </tr>
   <tr>
     <td><img src="assets/screenshot-library.png" width="280" alt="Library tab - saved papers with reading status, star ratings, and citation export"/></td>
-    <td><img src="assets/screenshot-discover.png" width="280" alt="Discover tab - personalized journal and conference recommendations"/></td>
+    <td><img src="assets/screenshot-discover.jpg" width="280" alt="Discover tab - personalized journal and conference recommendations"/></td>
   </tr>
   <tr>
     <td align="center"><b>📅 Deadlines</b></td>
