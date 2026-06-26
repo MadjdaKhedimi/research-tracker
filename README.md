@@ -1,9 +1,9 @@
 # 📚 Research Tracker
 
-> **Your second brain for academic research**: save papers, track deadlines, and discover the perfect journal to publish in.
+> **Your second brain for academic research.** Save papers, track deadlines, and find the right journal to publish in, all without leaving your browser.
 
 [![Chrome Web Store](https://img.shields.io/badge/Chrome%20Web%20Store-Available-4285F4?style=for-the-badge&logo=google-chrome&logoColor=white)](https://chromewebstore.google.com/detail/research-tracker/noabcbnomflikmeopokbfiibbgiaafih)
-[![Version](https://img.shields.io/badge/version-2.3.1-blue?style=for-the-badge)](https://chromewebstore.google.com/detail/research-tracker/noabcbnomflikmeopokbfiibbgiaafih)
+[![Version](https://img.shields.io/badge/version-2.3.4-blue?style=for-the-badge)](https://chromewebstore.google.com/detail/research-tracker/noabcbnomflikmeopokbfiibbgiaafih)
 [![License](https://img.shields.io/badge/license-MIT-green?style=for-the-badge)](LICENSE)
 [![Privacy](https://img.shields.io/badge/privacy-100%25%20local-success?style=for-the-badge&logo=shieldsdotio)](https://madjdakhedimi.github.io/privacy-policy/)
 
@@ -36,215 +36,100 @@
 
 ---
 
-## The Problem with Academic Research
+## Why it exists
 
-You're 3 papers deep into a rabbit hole on arXiv at midnight, your browser has 47 tabs open, your submission deadline is next Tuesday, and you just realized the journal you've been targeting probably isn't the right fit. Sound familiar?
-
-**Research Tracker was built for exactly this moment.**
+You're a few papers deep into a rabbit hole at midnight, your browser has 40 tabs open, a submission deadline is next Tuesday, and you've just realized the journal you were aiming for isn't the right fit. Research Tracker is built for exactly that moment. It quietly captures what you read, keeps your deadlines in view, and points you toward venues that actually match your work.
 
 ---
 
-## 🆕 What's New in v2.3.1
+## What it does
 
-### Library
-- **Reading status** on each paper: *To Read*, *Reading*, or *Done*
-- **Star ratings** from 1 to 5
-- **Copy citation** in APA, MLA, or BibTeX format with one click
+**🗂️ Save papers as you read.** Open a paper on a supported publisher and a little "paper detected" prompt slides in. One click saves it to your library, with full-text search, notes, reading status, and star ratings. Copy a clean citation in APA, MLA, or BibTeX anytime. Author, title, year, and DOI are read straight from each page's citation metadata, so the citations come out right instead of guessed.
 
-### Deadlines
-- **Tag each deadline** as Conference, Journal, Workshop, or Other
-- **Color-coded urgency**: red under 7 days · orange under 30 · yellow under 60 · green otherwise
-- **Live venue suggestions** from DBLP and OpenAlex as you type a conference or journal name
-- **WikiCFP integration**: submission deadlines fetched automatically, future dates only
-- Every deadline card shows a reminder to verify the date on the official site
-- **Track Deadline** button directly on every Discover venue card
+**📡 Find where to publish.** Tell it your research interests or import your academic profile, and the Discover tab queries [OpenAlex](https://openalex.org) to surface the journals and conferences most relevant to you. Each result shows real metrics: 2-year citedness, h-index, citation counts, quartile ranking, open-access status, and a live relevance score. The matching weighs keyword specificity, breadth, and venue quality, not just plain string search.
 
-### Discover
-- Recommendations now factor in both your imported profiles and saved papers
-- All API calls run in parallel - results load noticeably faster
-- Relevance score reflects how many of your research topics a venue covers
+**📅 Never miss a deadline.** Add conference and journal deadlines in a couple of clicks, tag them, and watch them color-code by urgency as the date gets closer. Type a venue name and get live suggestions from DBLP and OpenAlex, with submission dates pulled from WikiCFP. Every card reminds you to confirm on the official site.
 
-### Profile
-- Import from LinkedIn, Google Scholar, and ResearchGate simultaneously - all three sources merge into one profile
-- Import buttons always visible so you can add or refresh sources at any time
-- After first import, each button links directly to your saved profile page
-- **Remove individual imported sources** with one click
-- **Remove individual keywords and interests** from the profile card
-- Only meaningful research domain terms are stored and shown as keywords
-
-### Content Scripts
-- Close button added to the import bar on LinkedIn, Google Scholar, and ResearchGate
-- Profile extraction now uses page text instead of DOM class selectors - survives site redesigns
+**👤 Import your profile once.** Visit your profile on LinkedIn, Google Scholar, or ResearchGate and click the floating import button. Your name, affiliation, and research interests are pulled in locally and merged across sources with deduplication. You can also add interests like `federated learning` or `CRISPR` by hand, and they're weighted in right away.
 
 ---
 
-## ✨ What It Does
+## 🔒 Privacy first
 
-### 🗂️ Paper Library: Never Lose a Paper Again
-Browse arXiv and suddenly a notification slides in: *"Paper detected -- save it?"*. One click. Done. Your library grows automatically as you read, with full-text search, custom notes, reading status, star ratings, and instant access to every URL you've ever saved. Copy a citation in APA, MLA, or BibTeX format in one click.
-
-**Supported publishers:**
-`arXiv` · `PubMed` · `Nature` · `Science` · `IEEE Xplore` · `Springer` · `Wiley` · `PLOS` · `MDPI` · `ScienceDirect`
-
-### 📡 Discover: AI-Powered Venue Recommendations
-This is the secret weapon. Tell Research Tracker your research interests, import your academic profile, and it queries the [OpenAlex](https://openalex.org) database to surface the most relevant journals and conferences for *you*, complete with real metrics:
-
-- **2-year citedness** (impact factor proxy)
-- **h-index** and citation counts
-- **Quartile ranking** (Q1–Q4, inferred from h-index)
-- **Open Access status** and APC costs
-- **Indexing** (DOAJ, Scopus, Web of Science)
-- **Relevance score** with a live match bar
-- **Track Deadline** button on every venue card
-
-The matching algorithm weighs keyword specificity, match breadth, and venue quality. Not just naive string search. All API calls run in parallel for fast results.
-
-### 📅 Deadlines: Submission Anxiety, Managed
-Add conference and journal deadlines in two clicks. Tag them as Conference, Journal, Workshop, or Other. Type a venue name and get live suggestions from DBLP and OpenAlex - submission deadlines auto-filled from WikiCFP (future dates only). The extension color-codes urgency: green → yellow → orange → red as the date approaches, with a reminder on every card to verify on the official site. No more missed CFPs.
-
-### 👤 Profile: Import Once, Benefit Forever
-Connect your academic identity by visiting your profile on LinkedIn, Google Scholar, or ResearchGate - or all three at once. A floating button appears. Click it and your name, affiliation, research interests, and keywords are extracted locally and stored. Multiple sources merge automatically, with deduplication. Remove individual sources or keywords anytime. These feed directly into the recommendation engine.
-
-You can also manually add interests like `"federated learning"` or `"CRISPR"` and they're weighted in immediately.
-
----
-
-## 🧠 How the Recommendation Engine Works
-
-```
-Your Keywords + Saved Paper Titles + Manual Interests
-            ↓
-     OpenAlex + DBLP API Queries (parallel)
-            ↓
-     Match Scoring Algorithm:
-     • Exact name match    → 8–10 pts
-     • Concept match       → 4–7 pts
-     • Anywhere in text    → 2 pts
-     • Longer keywords     → 1.3× weight
-     • Keyword breadth     → up to 35% boost
-     • h-index quality     → up to 1.20× multiplier
-     • Citation volume     → up to 1.08× multiplier
-     • Open Access         → 1.02× multiplier
-            ↓
-     Ranked, filterable venue cards with live metrics
-```
-
-Results are cached for 24 hours to keep API calls minimal.
-
----
-
-## 🔒 Privacy-First Architecture
-
-Every byte of your data lives in your browser. Here's the full picture:
+Every byte of your data stays in your browser.
 
 | Data | Where it lives | Who can see it |
 |---|---|---|
 | Saved papers | `chrome.storage.sync` (your device) | Only you |
 | Deadlines | `chrome.storage.sync` (your device) | Only you |
-| Profile (LinkedIn/Scholar/RG) | `chrome.storage.sync` (your device) | Only you |
-| OpenAlex API queries | Anonymous search terms | OpenAlex (no personal info) |
+| Profile | `chrome.storage.sync` (your device) | Only you |
+| Venue queries | Anonymous search terms | Public databases only |
 
-**We have zero servers. We collect zero telemetry. We run zero ads.**
+No servers, no telemetry, no ads. The only outbound requests are anonymous keyword queries to public academic databases like `api.openalex.org` and `dblp.org`. No cookies, no tracking, no analytics.
 
-The only outbound requests are anonymous keyword queries to `api.openalex.org` and `dblp.org`: public academic databases. No cookies, no tracking pixels, no analytics scripts.
-
----
-
-## 🚀 Getting Started
-
-**1. Install** from the [Chrome Web Store](https://chromewebstore.google.com/detail/research-tracker/noabcbnomflikmeopokbfiibbgiaafih)
-
-**2. Visit any paper** on arXiv, PubMed, Nature, etc. A save notification appears automatically
-
-**3. Build your profile** (optional but powerful):
-   - Go to your Google Scholar citations page → click **"Import to Research Tracker"**
-   - Or visit your LinkedIn/ResearchGate profile and do the same
-   - Or just type keywords manually in the **Profile → Manual Interests** section
-
-**4. Open the Discover tab**: personalized journal and conference recommendations, live
-
-**5. Add deadlines** so you never miss a submission window
+See the [full privacy policy](https://madjdakhedimi.github.io/privacy-policy/).
 
 ---
 
-## 📁 Project Structure
+## 🚀 Getting started
 
-```
-research-tracker/
-├── manifest.json          # Extension config (MV3)
-├── popup.html             # Main popup UI
-├── popup.js               # Tab navigation, library, deadlines,
-│                          # discover engine, recommendation renderer
-├── popup.css              # UI styles (clean design system)
-├── content.js             # Auto-detects papers on 10+ publishers
-├── content.css            # Injected notification / modal styles
-├── linkedin.js            # LinkedIn profile extractor
-├── scholar.js             # Google Scholar profile extractor
-├── researchgate.js        # ResearchGate profile extractor
-├── privacy-policy.html    # Full privacy policy
-└── icons/
-    ├── icon16.png
-    ├── icon48.png
-    └── icon128.png
-```
+1. **Install** from the [Chrome Web Store](https://chromewebstore.google.com/detail/research-tracker/noabcbnomflikmeopokbfiibbgiaafih).
+2. **Visit any paper** on a supported site. The save prompt appears on its own.
+3. **Build your profile** (optional but worth it): import from Google Scholar, LinkedIn, or ResearchGate, or just type a few interests under **Profile → Manual Interests**.
+4. **Open Discover** for live journal and conference recommendations.
+5. **Add deadlines** so nothing slips past you.
+
+Running from source: clone the repo, open `chrome://extensions`, turn on Developer mode, and choose **Load unpacked**.
 
 ---
 
-## 🛠️ Technical Highlights
+## 🌐 Where it works
 
-- **Manifest V3**: compliant with Chrome's current extension standard
-- **No external dependencies** at runtime: pure vanilla JS, no frameworks
-- **Multi-attempt paper detection**: retries at 500ms, 1500ms, and 3000ms to handle slow-loading publishers (looking at you, IEEE)
-- **Intelligent profile merging**: importing from multiple sources (Scholar + LinkedIn + ResearchGate) deduplicates and combines keyword arrays
-- **Dynamic metrics cache**: OpenAlex responses cached in memory for 24 hours, keyed by venue ID
-- **Parallel API calls**: Discover queries run concurrently for faster load times
-- **Resilient profile extraction**: uses page text instead of DOM class selectors, survives site redesigns
-- **XSS-safe rendering**: all user/API content passed through `escapeHtml()` before DOM insertion
-- **Graceful degradation**: if OpenAlex is unreachable, the extension still works; just recommendations won't load
+**Paper detection:** arXiv, PubMed, Nature, Science, IEEE Xplore, Springer, Wiley, PLOS, MDPI, and ScienceDirect.
+
+**Profile import:** LinkedIn, Google Scholar, and ResearchGate.
+
+**Venue data:** OpenAlex, DBLP, and WikiCFP (all anonymous, read-only).
 
 ---
 
-## 🌐 Supported Sites
+## 🛠️ Under the hood
 
-**Auto-save (paper detection):**
-`arxiv.org` · `pubmed.ncbi.nlm.nih.gov` · `nature.com` · `science.org` · `ieeexplore.ieee.org` · `link.springer.com` · `onlinelibrary.wiley.com` · `journals.plos.org` · `mdpi.com` · `sciencedirect.com`
-
-**Profile import:**
-`linkedin.com/in/*` · `scholar.google.com/citations*` · `researchgate.net/profile/*`
-
-**Data APIs:**
-`api.openalex.org` (anonymous, read-only) · `dblp.org` (anonymous, read-only) · `wikicfp.com` (deadline lookup)
+- **Manifest V3**, pure vanilla JavaScript, no runtime dependencies.
+- **One permission only:** `storage`.
+- **Citation-metadata extraction:** reads standard Highwire citation tags, so paper details stay accurate across publishers and survive site redesigns.
+- **Patient detection:** retries at 500ms, 1500ms, 3000ms, and 5000ms to handle slow-loading pages and single-page-app publishers.
+- **Smart profile merging:** combines and deduplicates interests across all three import sources.
+- **XSS-safe rendering:** all user and API content is escaped before it touches the DOM.
+- **Graceful degradation:** if a database is unreachable, the rest of the extension keeps working.
 
 ---
 
-## 🗺️ Roadmap Ideas
+## 🗺️ Roadmap
 
-- [ ] Export library to BibTeX / CSV / Zotero-compatible format
+- [ ] Export library to BibTeX, CSV, or Zotero
 - [ ] Browser notifications for approaching deadlines
-- [ ] Arxiv category filtering in recommendations
+- [ ] arXiv category filtering in recommendations
 - [ ] Bulk import from `.bib` files
-- [ ] Collaboration: share a reading list via URL
+- [ ] Shareable reading lists
 - [ ] Dark mode
 
-Have a feature request? Open an issue or reach out on [LinkedIn](https://www.linkedin.com/in/madjda-khedimi-336154162/).
+Have an idea? Open an issue or say hi on [LinkedIn](https://www.linkedin.com/in/madjda-khedimi-336154162/).
 
 ---
 
 ## 👩‍💻 Author
 
-**Madjda Khedimi**
-[LinkedIn](https://www.linkedin.com/in/madjda-khedimi-336154162/) · [Chrome Web Store](https://chromewebstore.google.com/detail/research-tracker/noabcbnomflikmeopokbfiibbgiaafih)
-
----
+**Madjda Khedimi** · [LinkedIn](https://www.linkedin.com/in/madjda-khedimi-336154162/) · [Chrome Web Store](https://chromewebstore.google.com/detail/research-tracker/noabcbnomflikmeopokbfiibbgiaafih)
 
 ## 📄 License
 
-MIT: do whatever you want, just keep the attribution.
+MIT. Do whatever you want, just keep the attribution.
 
 ---
 
 <div align="center">
 
-**If Research Tracker saved you time, consider leaving a ⭐ review on the [Chrome Web Store](https://chromewebstore.google.com/detail/research-tracker/noabcbnomflikmeopokbfiibbgiaafih): it helps other researchers find it.**
+**If Research Tracker saves you time, a ⭐ review on the [Chrome Web Store](https://chromewebstore.google.com/detail/research-tracker/noabcbnomflikmeopokbfiibbgiaafih) helps other researchers find it.**
 
 </div>
