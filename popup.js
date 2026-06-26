@@ -68,7 +68,7 @@ async function fetchJournalMetrics(venueName, venueId = null) {
 }
 
 function loadPapers(searchQuery = '') {
-  chrome.storage.sync.get(['papers'], (result) => {
+  chrome.storage.local.get(['papers'], (result) => {
     let papers = result.papers || [];
     const container = document.getElementById('papers-list');
     if (searchQuery) {
@@ -292,24 +292,24 @@ function generateCitation(paper, format) {
 }
 
 function updatePaperField(id, field, value) {
-  chrome.storage.sync.get(['papers'], (result) => {
+  chrome.storage.local.get(['papers'], (result) => {
     const papers = result.papers || [];
     const idx = papers.findIndex(p => p.id === id);
     if (idx === -1) return;
     papers[idx][field] = value;
-    chrome.storage.sync.set({ papers });
+    chrome.storage.local.set({ papers });
   });
 }
 
 function deletePaper(id) {
-  chrome.storage.sync.get(['papers'], (result) => {
+  chrome.storage.local.get(['papers'], (result) => {
     const papers = (result.papers || []).filter(p => p.id !== id);
-    chrome.storage.sync.set({ papers }, () => { loadPapers(); updatePaperCount(); });
+    chrome.storage.local.set({ papers }, () => { loadPapers(); updatePaperCount(); });
   });
 }
 
 function updatePaperCount() {
-  chrome.storage.sync.get(['papers'], (result) => {
+  chrome.storage.local.get(['papers'], (result) => {
     document.getElementById('paper-count').textContent = (result.papers || []).length;
   });
 }
@@ -671,20 +671,25 @@ document.getElementById('cancel-deadline').addEventListener('click', () => {
 });
 
 document.getElementById('export-btn').addEventListener('click', () => {
-  chrome.storage.sync.get(['papers', 'deadlines', 'userProfile'], (result) => {
-    const blob = new Blob([JSON.stringify({ ...result, exportedAt: new Date().toISOString() }, null, 2)], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a'); a.href = url;
-    a.download = `research-tracker-${new Date().toISOString().split('T')[0]}.json`;
-    a.click(); URL.revokeObjectURL(url);
+  chrome.storage.local.get(['papers'], (localResult) => {
+    chrome.storage.sync.get(['deadlines', 'userProfile'], (syncResult) => {
+      const result = { ...localResult, ...syncResult };
+      const blob = new Blob([JSON.stringify({ ...result, exportedAt: new Date().toISOString() }, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a'); a.href = url;
+      a.download = `research-tracker-${new Date().toISOString().split('T')[0]}.json`;
+      a.click(); URL.revokeObjectURL(url);
+    });
   });
 });
 
 document.getElementById('clear-all-btn').addEventListener('click', () => {
   if (confirm('This will delete all papers, deadlines, and your profile. Are you sure?')) {
-    chrome.storage.sync.clear(() => {
-      loadPapers(); loadDeadlines(); loadProfile(); updatePaperCount();
-      alert('All data cleared');
+    chrome.storage.local.clear(() => {
+      chrome.storage.sync.clear(() => {
+        loadPapers(); loadDeadlines(); loadProfile(); updatePaperCount();
+        alert('All data cleared');
+      });
     });
   }
 });
@@ -928,9 +933,13 @@ let discoverCacheKeywords = null;
 async function loadRecommendations() {
   const container = document.getElementById('recommendations-list');
 
-  const stored = await new Promise(resolve => {
-    chrome.storage.sync.get(['userProfile', 'papers', 'manualInterests'], resolve);
+  const localStored = await new Promise(resolve => {
+    chrome.storage.local.get(['papers'], resolve);
   });
+  const syncStored = await new Promise(resolve => {
+    chrome.storage.sync.get(['userProfile', 'manualInterests'], resolve);
+  });
+  const stored = { ...localStored, ...syncStored };
 
   const userProfile = stored.userProfile || {};
   const savedPapers = stored.papers || [];
