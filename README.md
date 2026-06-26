@@ -120,7 +120,7 @@ Have an idea? Open an issue or say hi on [LinkedIn](https://www.linkedin.com/in/
 
 ## 👩‍💻 Author
 
-**Madjda Khedimi** · [LinkedIn](https://www.linkedin.com/in/madjda-khedimi-336154162/) · [Chrome Web Store](https://chromewebstore.google.com/detail/research-tracker/noabcbnomflikmeopokbfiibbgiaafih)
+**Madjda Khedimi** · [LinkedIn](https://www.linkedin.com/in/madjda-khedimi-336154162/) · [Research Tracker Chrome Extension](https://chromewebstore.google.com/detail/research-tracker/noabcbnomflikmeopokbfiibbgiaafih)
 
 ## 📄 License
 
@@ -130,6 +130,6 @@ MIT. Do whatever you want, just keep the attribution.
 
 <div align="center">
 
-**If Research Tracker saves you time, a ⭐ review on the [Chrome Web Store](https://chromewebstore.google.com/detail/research-tracker/noabcbnomflikmeopokbfiibbgiaafih) helps other researchers find it.**
+**If Research Tracker saves you time, a ⭐ review on the [Research Tracker Chrome Extension](https://chromewebstore.google.com/detail/research-tracker/noabcbnomflikmeopokbfiibbgiaafih) helps other researchers find it.**
 
 </div>
