@@ -199,54 +199,92 @@ function attachPaperCardListeners(container, papers) {
 
 function generateCitation(paper, format) {
   const title = paper.title || 'Untitled';
-  const authors = paper.authors || '[Authors unknown]';
-  const year = paper.savedAt ? new Date(paper.savedAt).getFullYear() : new Date().getFullYear();
+  const authors = paper.authors || '';
+  const year = paper.pubYear
+    || (paper.savedAt ? new Date(paper.savedAt).getFullYear() : new Date().getFullYear());
   const source = paper.source || 'Unknown Source';
   const url = paper.url || '';
   const doi = paper.doi || null;
   const accessed = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
 
   function parseAuthors(authorStr) {
-    if (!authorStr || authorStr === '[Authors unknown]') return [];
-    // Try semicolon split first (IEEE style), then comma split
-    const sep = authorStr.includes(';') ? ';' : ',';
-    return authorStr.split(sep).map(a => a.trim()).filter(Boolean);
+    if (!authorStr) return [];
+    // Semicolon is the unambiguous separator (used by meta tags and IEEE).
+    // Only fall back to comma when there's no semicolon AND the string does
+    // not look like a single "Last, First" name.
+    let sep = ';';
+    if (!authorStr.includes(';')) {
+      const commaCount = (authorStr.match(/,/g) || []).length;
+      // "Last, First" has exactly one comma and no semicolon -> single author
+      sep = commaCount > 1 ? ',' : null;
+    }
+    const list = sep ? authorStr.split(sep) : [authorStr];
+    return list.map(a => a.trim()).filter(Boolean);
+  }
+
+  // Normalize one name to { last, initials } regardless of input order.
+  function nameParts(name) {
+    const n = name.trim();
+    if (n.includes(',')) {
+      // already "Last, First Middle"
+      const [last, rest = ''] = n.split(',').map(s => s.trim());
+      const initials = rest.split(/\s+/).filter(Boolean)
+        .map(p => p[0].toUpperCase() + '.').join(' ');
+      return { last, initials, first: rest };
+    }
+    // "First Middle Last"
+    const parts = n.split(/\s+/).filter(Boolean);
+    if (parts.length === 1) return { last: parts[0], initials: '', first: '' };
+    const last = parts[parts.length - 1];
+    const firsts = parts.slice(0, -1);
+    const initials = firsts.map(p => p[0].toUpperCase() + '.').join(' ');
+    return { last, initials, first: firsts.join(' ') };
   }
 
   if (format === 'apa') {
     const authorList = parseAuthors(authors);
-    let authorAPA = '[Authors unknown]';
+    let authorAPA = '';
     if (authorList.length > 0) {
-      const formatted = authorList.slice(0, 3).map(name => {
-        const parts = name.trim().split(/\s+/);
-        if (parts.length === 1) return parts[0];
-        const last = parts[parts.length - 1];
-        const initials = parts.slice(0, -1).map(n => n[0].toUpperCase() + '.').join(' ');
-        return `${last}, ${initials}`;
-      });
-      authorAPA = formatted.join(', ') + (authorList.length > 3 ? ', et al.' : '');
+      // APA: list up to 20 authors; if more, list 19 + ellipsis + last.
+      const fmt = a => {
+        const { last, initials } = nameParts(a);
+        return initials ? `${last}, ${initials}` : last;
+      };
+      if (authorList.length === 1) {
+        authorAPA = fmt(authorList[0]);
+      } else if (authorList.length <= 20) {
+        const all = authorList.map(fmt);
+        authorAPA = all.slice(0, -1).join(', ') + ', & ' + all[all.length - 1];
+      } else {
+        authorAPA = authorList.slice(0, 19).map(fmt).join(', ')
+          + ', ... ' + fmt(authorList[authorList.length - 1]);
+      }
     }
-    return `${authorAPA} (${year}). ${title}. ${source}. ${doi ? 'https://doi.org/' + doi : url}`;
+    const head = authorAPA ? `${authorAPA} (${year}).` : `(${year}).`;
+    return `${head} ${title}. ${source}. ${doi ? 'https://doi.org/' + doi : url}`;
   }
   if (format === 'mla') {
     const authorList = parseAuthors(authors);
-    let firstAuthor = '[Authors unknown]';
+    let lead = '';
     if (authorList.length > 0) {
-      const parts = authorList[0].trim().split(/\s+/);
-      if (parts.length >= 2) {
-        const last = parts[parts.length - 1];
-        const rest = parts.slice(0, -1).join(' ');
-        firstAuthor = `${last}, ${rest}`;
-      } else {
-        firstAuthor = authorList[0];
-      }
+      const { last, first } = nameParts(authorList[0]);
+      lead = first ? `${last}, ${first}` : last;
+      if (authorList.length > 1) lead += ', et al';
+      lead += '. ';
     }
-    const otherAuthors = authorList.length > 1 ? ', et al.' : '';
-    return `${firstAuthor}${otherAuthors}. "${title}." ${source}, ${year}. ${doi ? 'https://doi.org/' + doi : url}. Accessed ${accessed}.`;
+    return `${lead}"${title}." ${source}, ${year}. ${doi ? 'https://doi.org/' + doi : url}. Accessed ${accessed}.`;
   }
   if (format === 'bibtex') {
-    const key = (authors.split(',')[0].split(' ').pop() || 'Unknown').toLowerCase() + year;
-    const authorsClean = authors !== '[Authors unknown]' ? authors : 'Unknown';
+    const authorList = parseAuthors(authors);
+    const keyLast = authorList.length ? nameParts(authorList[0]).last : 'unknown';
+    const key = keyLast.toLowerCase().replace(/[^a-z]/g, '') + year;
+    // BibTeX wants authors separated by " and "
+    const authorsClean = authorList.length
+      ? authorList.map(a => {
+          const { last, first } = nameParts(a);
+          return first ? `${last}, ${first}` : last;
+        }).join(' and ')
+      : 'Unknown';
     return `@article{${key},\n  author  = {${authorsClean}},\n  title   = {${title}},\n  journal = {${source}},\n  year    = {${year}},\n  url     = {${doi ? 'https://doi.org/' + doi : url}}\n}`;
   }
   return '';

@@ -7,7 +7,7 @@ let hasDetected = false;
 let currentPaperUrl = null;
 let isProcessing = false;
 let detectionAttempts = 0;
-const MAX_ATTEMPTS = 3;
+let TOTAL_DETECTION_ATTEMPTS = 4;
 
 function log(message, data = null) {
   if (DEBUG_MODE) {
@@ -16,7 +16,8 @@ function log(message, data = null) {
 }
 
 function scheduleDetection() {
-  const delays = [500, 1500, 3000];
+  const delays = [500, 1500, 3000, 5000];
+  TOTAL_DETECTION_ATTEMPTS = delays.length;
   
   delays.forEach((delay, index) => {
     setTimeout(() => {
@@ -105,6 +106,37 @@ function detectAndProcess() {
   log(`Matched publisher: ${source}`);
 
   if (paperInfo) {
+    // Prefer standard Highwire/Google Scholar citation meta tags over
+    // scraped DOM values. Meta tags live in <head>, are stable across site
+    // redesigns, and are required by Google Scholar, so when present they
+    // are more trustworthy than visible-element class selectors (which on
+    // SPA sites like ScienceDirect often grab a section heading or miss the
+    // author list entirely). Scraped values remain the fallback.
+    const meta = extractCitationMeta();
+    if (meta) {
+      if (meta.authors) paperInfo.authors = meta.authors;
+      else paperInfo.authors = paperInfo.authors || '';
+      if (meta.doi) paperInfo.doi = meta.doi;
+      if (meta.pubYear) paperInfo.pubYear = meta.pubYear;
+      // Trust meta title only if it is at least as long as the scraped one;
+      // guards against an oddly short meta title overwriting a good scrape.
+      if (meta.title && meta.title.length >= (paperInfo.title || '').length) {
+        paperInfo.title = meta.title;
+      } else if (!paperInfo.title || paperInfo.title.length < 5) {
+        paperInfo.title = meta.title || paperInfo.title;
+      }
+    }
+
+    // If we have a title but no authors yet, the page (often an SPA like
+    // ScienceDirect) may still be injecting citation meta. Don't lock in
+    // incomplete data unless this is the final scheduled attempt.
+    const isFinalAttempt = detectionAttempts >= TOTAL_DETECTION_ATTEMPTS;
+    if (!paperInfo.authors && !isFinalAttempt) {
+      log(`Title found but authors empty (attempt ${detectionAttempts}/${TOTAL_DETECTION_ATTEMPTS}) — will retry`);
+      isProcessing = false;
+      return;
+    }
+
     log(`✅ Paper detected: ${paperInfo.title.substring(0, 60)}...`);
     hasDetected = true;
     currentPaperUrl = url;
@@ -123,6 +155,48 @@ function detectAndProcess() {
   }
   
   isProcessing = false;
+}
+
+// Reads standard citation_* meta tags (Highwire / Google Scholar format).
+// Supported by arXiv, MDPI, PLOS, Springer, IEEE, Wiley, Nature and most
+// other academic publishers. Returns null if no citation meta is present.
+function extractCitationMeta() {
+  function metaContent(names) {
+    for (const name of names) {
+      const el = document.querySelector(`meta[name="${name}"]`);
+      if (el && el.content && el.content.trim()) return el.content.trim();
+    }
+    return '';
+  }
+  function metaAll(name) {
+    return [...document.querySelectorAll(`meta[name="${name}"]`)]
+      .map(m => (m.content || '').trim())
+      .filter(Boolean);
+  }
+
+  const authorList = metaAll('citation_author');
+  // citation_author tags are usually "Last, First" — keep as-is, join with "; "
+  const authors = authorList.length ? authorList.join('; ') : '';
+
+  const title = metaContent(['citation_title']);
+  const doiRaw = metaContent(['citation_doi']);
+  const doi = doiRaw ? doiRaw.replace(/^https?:\/\/(dx\.)?doi\.org\//i, '') : '';
+
+  const dateRaw = metaContent([
+    'citation_publication_date',
+    'citation_date',
+    'citation_online_date',
+    'dc.date',
+    'prism.publicationDate'
+  ]);
+  let pubYear = '';
+  if (dateRaw) {
+    const m = dateRaw.match(/\d{4}/);
+    if (m) pubYear = m[0];
+  }
+
+  if (!authors && !title && !doi && !pubYear) return null;
+  return { authors, title, doi, pubYear };
 }
 
 function extractArxiv() {
@@ -652,6 +726,7 @@ function savePaper(paperInfo, notes) {
     url: paperInfo.url,
     source: paperInfo.source,
     doi: paperInfo.doi || null,
+    pubYear: paperInfo.pubYear || null,
     notes: notes,
     status: 'To Read',
     rating: 0,
