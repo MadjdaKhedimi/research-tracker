@@ -3,7 +3,7 @@
 > **Your second brain for academic research.** Save papers, track deadlines, and find the right journal to publish in, all without leaving your browser.
 
 [![Chrome Web Store](https://img.shields.io/badge/Chrome%20Web%20Store-Available-4285F4?style=for-the-badge&logo=google-chrome&logoColor=white)](https://chromewebstore.google.com/detail/research-tracker/noabcbnomflikmeopokbfiibbgiaafih)
-[![Version](https://img.shields.io/badge/version-2.3.4-blue?style=for-the-badge)](https://chromewebstore.google.com/detail/research-tracker/noabcbnomflikmeopokbfiibbgiaafih)
+[![Version](https://img.shields.io/badge/version-2.3.5-blue?style=for-the-badge)](https://chromewebstore.google.com/detail/research-tracker/noabcbnomflikmeopokbfiibbgiaafih)
 [![License](https://img.shields.io/badge/license-MIT-green?style=for-the-badge)](LICENSE)
 [![Privacy](https://img.shields.io/badge/privacy-100%25%20local-success?style=for-the-badge&logo=shieldsdotio)](https://madjdakhedimi.github.io/privacy-policy/)
 
@@ -52,6 +52,8 @@ You're a few papers deep into a rabbit hole at midnight, your browser has 40 tab
 
 **👤 Import your profile once.** Visit your profile on LinkedIn, Google Scholar, or ResearchGate and click the floating import button. Your name, affiliation, and research interests are pulled in locally and merged across sources with deduplication. You can also add interests like `federated learning` or `CRISPR` by hand, and they're weighted in right away.
 
+**🌙 Light or dark, your call.** A theme toggle in Settings switches between Light, Dark, and Auto. Auto follows your system theme and updates on the fly when it changes.
+
 ---
 
 ## 🔒 Privacy first
@@ -99,6 +101,7 @@ Running from source: clone the repo, open `chrome://extensions`, turn on Develop
 - **One permission only:** `storage`.
 - **Citation-metadata extraction:** reads standard Highwire citation tags, so paper details stay accurate across publishers and survive site redesigns.
 - **Patient detection:** retries at 500ms, 1500ms, 3000ms, and 5000ms to handle slow-loading pages and single-page-app publishers.
+- **Theme-aware UI:** Light, Dark, and Auto modes driven by CSS variables, with the system preference applied before first paint to avoid a flash.
 - **Smart profile merging:** combines and deduplicates interests across all three import sources.
 - **XSS-safe rendering:** all user and API content is escaped before it touches the DOM.
 - **Graceful degradation:** if a database is unreachable, the rest of the extension keeps working.
@@ -112,7 +115,6 @@ Running from source: clone the repo, open `chrome://extensions`, turn on Develop
 - [ ] arXiv category filtering in recommendations
 - [ ] Bulk import from `.bib` files
 - [ ] Shareable reading lists
-- [ ] Dark mode
 
 Have an idea? Open an issue or say hi on [LinkedIn](https://www.linkedin.com/in/madjda-khedimi-336154162/).
 
