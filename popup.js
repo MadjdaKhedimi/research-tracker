@@ -14,8 +14,29 @@ document.querySelectorAll('.tab').forEach(tab => {
 });
 
 document.addEventListener('DOMContentLoaded', () => {
-  loadPapers();
-  updatePaperCount();
+  // Migrate papers from sync to local (one-time, for users upgrading from older versions)
+  chrome.storage.local.get(['papers', 'migrated_papers_to_local'], (localData) => {
+    if (!localData.migrated_papers_to_local) {
+      chrome.storage.sync.get(['papers'], (syncData) => {
+        const syncPapers = syncData.papers || [];
+        const localPapers = localData.papers || [];
+        if (syncPapers.length > 0 && localPapers.length === 0) {
+          chrome.storage.local.set({ papers: syncPapers, migrated_papers_to_local: true }, () => {
+            chrome.storage.sync.remove('papers');
+            loadPapers();
+            updatePaperCount();
+          });
+        } else {
+          chrome.storage.local.set({ migrated_papers_to_local: true });
+          loadPapers();
+          updatePaperCount();
+        }
+      });
+    } else {
+      loadPapers();
+      updatePaperCount();
+    }
+  });
   loadProfile();
   initThemeToggle();
 });
