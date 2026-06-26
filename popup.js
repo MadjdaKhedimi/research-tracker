@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
   loadPapers();
   updatePaperCount();
   loadProfile();
+  initThemeToggle();
 });
 
 // ========== METRICS CACHE ==========
@@ -1343,4 +1344,62 @@ function escapeHtml(text) {
   const d = document.createElement('div');
   d.textContent = String(text);
   return d.innerHTML;
+}
+
+// ============================================================
+// Theme toggle (Auto / Light / Dark)
+// ============================================================
+function initThemeToggle() {
+  const toggle = document.getElementById('theme-toggle');
+  if (!toggle) return;
+  const buttons = toggle.querySelectorAll('button[data-theme-choice]');
+
+  function systemPrefersDark() {
+    return window.matchMedia &&
+      window.matchMedia('(prefers-color-scheme: dark)').matches;
+  }
+
+  function applyResolved(choice) {
+    const dark = choice === 'dark' || (choice === 'auto' && systemPrefersDark());
+    if (dark) {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    } else {
+      document.documentElement.removeAttribute('data-theme');
+    }
+  }
+
+  function setActiveButton(choice) {
+    buttons.forEach(b => {
+      b.classList.toggle('active', b.dataset.themeChoice === choice);
+    });
+  }
+
+  // Restore saved choice (default: auto)
+  chrome.storage.sync.get(['themeChoice'], (result) => {
+    const choice = result.themeChoice || 'auto';
+    setActiveButton(choice);
+    applyResolved(choice);
+  });
+
+  // Handle clicks
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const choice = btn.dataset.themeChoice;
+      chrome.storage.sync.set({ themeChoice: choice });
+      setActiveButton(choice);
+      applyResolved(choice);
+    });
+  });
+
+  // React to OS theme changes while the popup is open, but only when Auto
+  if (window.matchMedia) {
+    const mq = window.matchMedia('(prefers-color-scheme: dark)');
+    const onChange = () => {
+      chrome.storage.sync.get(['themeChoice'], (result) => {
+        if ((result.themeChoice || 'auto') === 'auto') applyResolved('auto');
+      });
+    };
+    if (mq.addEventListener) mq.addEventListener('change', onChange);
+    else if (mq.addListener) mq.addListener(onChange);
+  }
 }

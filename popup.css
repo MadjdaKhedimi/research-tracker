@@ -195,14 +195,14 @@ body {
 }
 
 .filter-tab.active {
-  background: white;
+  background: var(--bg);
   color: var(--primary);
   box-shadow: var(--shadow-sm);
 }
 
 .recommendation-card {
   padding: 16px;
-  background: white;
+  background: var(--bg);
   border: 1px solid var(--border);
   border-radius: 8px;
   transition: box-shadow 0.2s;
@@ -869,7 +869,7 @@ body {
   padding: 3px 10px;
   border-radius: 20px;
   border: 1px solid var(--border);
-  background: white;
+  background: var(--bg);
   cursor: pointer;
   color: var(--text-secondary);
   transition: all 0.15s;
@@ -879,7 +879,7 @@ body {
   font-size: 11px;
   color: #374151;
   line-height: 1.6;
-  background: white;
+  background: var(--bg);
   border: 1px solid var(--border);
   border-radius: 6px;
   padding: 8px;
@@ -895,7 +895,7 @@ body {
   padding: 4px 10px;
   border-radius: 6px;
   border: 1px solid var(--border);
-  background: white;
+  background: var(--bg);
   cursor: pointer;
   font-weight: 600;
   color: #374151;
@@ -904,7 +904,7 @@ body {
 .btn-copy-cite:hover { background: #f3f4f6; }
 
 /* Deadline urgency */
-.deadline-card { border-radius: 10px; padding: 12px 14px; background: white; border: 1px solid var(--border); margin-bottom: 10px; }
+.deadline-card { border-radius: 10px; padding: 12px 14px; background: var(--bg); border: 1px solid var(--border); margin-bottom: 10px; }
 .deadline-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
 .deadline-title-row { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
 .deadline-title { font-size: 13px; font-weight: 600; color: #111827; }
@@ -934,12 +934,12 @@ body {
   padding: 8px 10px; border: 1px solid var(--border); border-radius: 6px;
   font-size: 13px; font-family: inherit; color: #111827;
 }
-#deadline-form select { background: white; cursor: pointer; }
+#deadline-form select { background: var(--bg); cursor: pointer; }
 
 /* Deadline suggestions dropdown */
 .deadline-suggestions {
   position: absolute; top: 100%; left: 0; right: 0; z-index: 9999;
-  background: white; border: 1px solid var(--border); border-radius: 8px;
+  background: var(--bg); border: 1px solid var(--border); border-radius: 8px;
   box-shadow: 0 4px 16px rgba(0,0,0,0.12); max-height: 220px; overflow-y: auto;
 }
 .suggestion-item {
@@ -1117,3 +1117,110 @@ body {
   margin-left: 2px;
 }
 .tag-remove-kw:hover { opacity: 1; }
+
+/* ============================================================
+   DARK MODE
+   Applied when <html data-theme="dark">. The "Auto" setting
+   resolves to this via prefers-color-scheme (see popup.js).
+   ============================================================ */
+[data-theme="dark"] {
+  --primary: #3b82f6;
+  --primary-hover: #60a5fa;
+  --danger: #ef4444;
+  --danger-hover: #f87171;
+  --bg: #1a1d23;
+  --surface: #22262e;
+  --border: #353b45;
+  --text-primary: #e5e7eb;
+  --text-secondary: #9ca3af;
+  --text-tertiary: #6b7280;
+  --shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 4px 6px rgba(0, 0, 0, 0.5);
+}
+
+/* Surfaces that used a hardcoded light fill */
+[data-theme="dark"] .cite-panel { background: var(--surface); }
+[data-theme="dark"] .cite-text { color: var(--text-primary); }
+
+/* Reading-status pills */
+[data-theme="dark"] .status-toread  { background: #2d323b; color: #cbd5e1; }
+[data-theme="dark"] .status-reading { background: #1e2a45; color: #93c5fd; }
+[data-theme="dark"] .status-done    { background: #14321f; color: #6ee7a8; }
+
+/* Soft-tint badges (keep hue, darken background, lighten text) */
+[data-theme="dark"] .badge-conference { background: #1e2a45; color: #93c5fd; }
+[data-theme="dark"] .badge-journal    { background: #14321f; color: #6ee7a8; }
+[data-theme="dark"] .badge-info       { background: #3a2f12; color: #fcd34d; }
+[data-theme="dark"] .badge-success    { background: #14321f; color: #6ee7a8; }
+[data-theme="dark"] .source-badge,
+[data-theme="dark"] .paper-source-badge { background: #1e2a45; color: #93c5fd; }
+
+/* Warm accent cards (urgency / warnings) */
+[data-theme="dark"] .deadline-urgent .deadline-days { background: #3a2410; color: #fb923c; }
+
+/* Star rating: unfilled stars need to read on dark */
+[data-theme="dark"] .star { color: #4b5563; }
+
+/* Inputs and selects */
+[data-theme="dark"] input,
+[data-theme="dark"] select,
+[data-theme="dark"] textarea {
+  background: var(--surface);
+  color: var(--text-primary);
+  border-color: var(--border);
+}
+[data-theme="dark"] input::placeholder { color: var(--text-tertiary); }
+
+/* Theme toggle control */
+.theme-toggle {
+  display: flex;
+  gap: 4px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 3px;
+}
+.theme-toggle button {
+  flex: 1;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 6px 10px;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.theme-toggle button:hover { color: var(--text-primary); }
+.theme-toggle button.active {
+  background: var(--primary);
+  color: #ffffff;
+}
+
+/* Remaining light surfaces in dark mode */
+[data-theme="dark"] .suggestion-hindex { background: #2d323b; }
+[data-theme="dark"] .suggestions-disclaimer,
+[data-theme="dark"] .deadline-disclaimer {
+  background: #322a14;
+  color: #fcd34d;
+}
+
+/* Brighter links/titles for contrast on dark */
+[data-theme="dark"] .paper-title a,
+[data-theme="dark"] a { color: #60a5fa; }
+
+/* Additional dark-mode fixes (deadline/profile surfaces) */
+[data-theme="dark"] .deadline-type-badge { background: #2d323b; color: #cbd5e1; }
+[data-theme="dark"] .deadline-ok .deadline-days { background: #14321f; color: #6ee7a8; }
+[data-theme="dark"] .profile-import-section { background: var(--surface); }
+
+/* Cite / delete action buttons (were relying on UA default background) */
+.btn-cite, .btn-delete {
+  background: var(--surface);
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+}
+.btn-cite:hover  { background: var(--border); color: var(--text-primary); }
+.btn-delete:hover { background: var(--danger); color: #ffffff; border-color: var(--danger); }

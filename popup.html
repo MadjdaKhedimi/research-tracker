@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Research Tracker</title>
   <link rel="stylesheet" href="popup.css">
+  <script src="theme-init.js"></script>
 </head>
 <body>
   <div class="container">
@@ -155,6 +156,14 @@
     <!-- Settings Tab -->
     <div id="settings-tab" class="tab-content">
       <div class="settings-section">
+        <h2>Appearance</h2>
+        <div class="theme-toggle" id="theme-toggle">
+          <button data-theme-choice="auto" class="active">Auto</button>
+          <button data-theme-choice="light">Light</button>
+          <button data-theme-choice="dark">Dark</button>
+        </div>
+      </div>
+      <div class="settings-section">
         <h2>Privacy Policy</h2>
         <p>View our privacy policy to learn how we handle your data.</p>
         <button id="privacy-policy-btn" class="btn-secondary">View Privacy Policy</button>
@@ -169,7 +178,7 @@
       </div>
       <div class="settings-section">
         <h2>About</h2>
-        <p class="version">Version 2.3.1</p>
+        <p class="version">Version 2.3.4</p>
         <p class="description">Track papers, get personalized recommendations, and manage deadlines.</p>
       </div>
       <div class="settings-section">
