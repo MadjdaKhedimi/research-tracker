@@ -73,7 +73,7 @@ See the [full privacy policy](https://madjdakhedimi.github.io/privacy-policy/).
 
 ## 🚀 Getting started
 
-1. **Install** from the [Chrome Web Store](https://chromewebstore.google.com/detail/research-tracker/noabcbnomflikmeopokbfiibbgiaafih).
+1. **Install** from the [Research Tracker Chrome Extension](https://chromewebstore.google.com/detail/research-tracker/noabcbnomflikmeopokbfiibbgiaafih).
 2. **Visit any paper** on a supported site. The save prompt appears on its own.
 3. **Build your profile** (optional but worth it): import from Google Scholar, LinkedIn, or ResearchGate, or just type a few interests under **Profile → Manual Interests**.
 4. **Open Discover** for live journal and conference recommendations.
