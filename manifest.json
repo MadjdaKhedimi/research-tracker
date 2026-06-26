@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Research Tracker",
-  "version": "2.3.5",
+  "version": "2.3.6",
   "description": "Track papers, manage deadlines, and organize your research",
   "permissions": [
     "storage"
